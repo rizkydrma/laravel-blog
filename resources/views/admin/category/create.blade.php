@@ -5,11 +5,24 @@
 @section('content')
 <div class="row">
   <div class="col-6">
+
+    @if(session('status'))
+    <div class="alert alert-success">
+      {{ session('status') }}
+    </div>
+    @endif
+
     <form action="{{ route('category.store') }}" method="POST">
       @csrf
       <div class="form-group">
         <label>Category</label>
-        <input type="text" class="form-control" name="name">
+        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
+          placeholder="Enter new Category">
+        @error('name')
+        <div class="invalid-feedback">
+          {{ $message }}
+        </div>
+        @enderror
       </div>
 
       <button class="btn btn-primary btn-block">Save Category</button>

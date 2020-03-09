@@ -45,12 +45,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::create([
+
+        $request->validate([
+            'name' => 'required|min:3'
+        ]);
+
+        Category::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name)
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('status','Berhasil menambahkan Category');
     }
 
     /**
