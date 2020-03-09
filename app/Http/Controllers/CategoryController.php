@@ -77,7 +77,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = 'Edit Category';
+        $category = Category::findOrFail($id);
+        return view('admin.category.edit', compact('title','category'));
     }
 
     /**
@@ -89,7 +91,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3'
+        ]);
+
+        Category::where('id', $id)
+                ->update([
+                    'name' => $request->name,
+                    'slug' => Str::slug($request->name)
+                ]);
+        return redirect()->route('category.index')->with('status', 'Berhasil mengubah data');
     }
 
     /**

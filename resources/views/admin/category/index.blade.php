@@ -4,6 +4,12 @@
 
 @section('content')
 
+@if(session('status'))
+<div class="alert alert-success">
+  {{ session('status') }}
+</div>
+@endif
+
 <a href="{{ route('category.create') }}" class="btn btn-info mb-3">Tambah Data Category</a>
 
 <table class="table table-striped table-bordered table-hover table-sm">
@@ -22,7 +28,7 @@
       <td> {{ $item->name }} </td>
       <td> {{ $item->slug }} </td>
       <td>
-        <a href="" class="btn btn-primary">Edit</a>
+        <a href="{{ route('category.edit', $item->id ) }}" class="btn btn-primary">Edit</a>
         <a href="" class="btn btn-danger">Delete</a>
       </td>
     </tr>
