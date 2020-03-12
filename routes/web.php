@@ -23,3 +23,4 @@ Route::get('/home' , function(){
 
 Route::resource('/category','CategoryController');
 Route::resource('/tag', 'TagsController');
+Route::resource('/post', 'PostsController');
