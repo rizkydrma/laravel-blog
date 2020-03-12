@@ -22,7 +22,14 @@
         <ul class="dropdown-menu">
           <li><a class="nav-link" href="{{ route('category.index') }}">List Category</a></li>
           <li><a class="nav-link" href="{{ route('category.create') }}">Add Category</a></li>
-          <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+          <span>Tag</span></a>
+        <ul class="dropdown-menu">
+          <li><a class="nav-link" href="{{ route('tag.index') }}">List tag</a></li>
+          <li><a class="nav-link" href="{{ route('tag.create') }}">Add tag</a></li>
         </ul>
       </li>
       <li>

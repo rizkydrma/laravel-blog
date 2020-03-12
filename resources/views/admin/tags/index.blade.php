@@ -1,6 +1,6 @@
 @extends('template_backend.home')
 
-@section('title', $data['title'])
+@section('title', $title)
 
 @section('content')
 
@@ -10,7 +10,7 @@
 </div>
 @endif
 
-<a href="{{ route('category.create') }}" class="btn btn-info mb-3">Tambah Data Category</a>
+<a href="{{ route('tag.create') }}" class="btn btn-info mb-3">Add {{ $title }}</a>
 
 <table class="table table-striped table-bordered table-hover table-sm">
   <thead>
@@ -22,15 +22,15 @@
     </tr>
   </thead>
   <tbody>
-    @foreach ($data['category'] as $result => $item)
+    @foreach ($tags as $result => $item)
     <tr>
-      <td> {{ $result + $data['category']->firstitem() }} </td>
+      <td> {{ $result + $tags->firstitem() }} </td>
       <td> {{ $item->name }} </td>
       <td> {{ $item->slug }} </td>
       <td>
         <div class="d-inline-flex">
-          <a href="{{ route('category.edit', $item->id ) }}" class="btn btn-primary d-inline-block mr-2">Edit</a>
-          <form action="{{ route('category.destroy', $item->id) }}" method="POST">
+          <a href="{{ route('tag.edit', $item->id ) }}" class="btn btn-primary d-inline-block mr-2">Edit</a>
+          <form action="{{ route('tag.destroy', $item->id) }}" method="POST">
             @csrf
             @method('delete')
             <button type="submit" class="btn btn-danger inline-block">Delete</button>
@@ -42,6 +42,6 @@
   </tbody>
 </table>
 
-{{ $data['category']->links() }}
+{{ $tags->links() }}
 
 @endsection
