@@ -25,6 +25,7 @@
 <script src="{{ asset('/modules/owlcarousel2/dist/owl.carousel.min.js')}}"></script>
 <script src="{{ asset('/modules/summernote/summernote-bs4.js')}}"></script>
 <script src="{{ asset('/modules/chocolat/dist/js/jquery.chocolat.min.js')}}"></script>
+<script src="{{ asset('/modules/select2/dist/js/select2.full.min.js')}}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('/js/page/index.js')}}"></script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Category;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -30,7 +31,8 @@ class PostsController extends Controller
     {
         $title ='Make a Post';
         $category = Category::all();
-        return view('admin.post.create', compact('title','category'));
+        $tags = Tag::all();
+        return view('admin.post.create', compact('title','category','tags'));
     }
 
     /**
@@ -50,13 +52,16 @@ class PostsController extends Controller
 
         $newGambar = time().$request->gambar->getClientOriginalName();
 
-        Post::create([
+        $post = Post::create([
             'judul' => $request->judul,
             'category_id' => $request->category_id,
             'content' => $request->content,
             'gambar' => 'public/uploads/posts/'. $newGambar,
             'slug' => Str::slug($request->judul)
         ]);
+
+        $post->tag()->attach($request->tags);
+
 
         $request->gambar->move('public/uploads/posts/', $newGambar);
         return redirect()->back()->with('status', 'Berhasil membuat Postingan baru');
@@ -81,7 +86,10 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $title = 'Edit Post';
+        $tags = Tag::all();
+        $category = Category::all();
+        return view('admin.post.edit', compact('post','tags','title','category'));
     }
 
     /**
@@ -93,7 +101,37 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'judul' => 'required',
+            'category_id' => 'required',
+            'content' => 'required'
+        ]);
+
+        if($request->has('gambar')){
+            $newGambar = time().$request->gambar->getClientOriginalName();
+            $request->gambar->move('public/uploads/posts/', $newGambar);
+
+            $post_data = [
+                'judul' => $request->judul,
+                'category_id' => $request->category_id,
+                'content' => $request->content,
+                'gambar' => 'public/uploads/posts/'. $newGambar,
+                'slug' => Str::slug($request->judul)
+            ];
+        }else{
+            $post_data = [
+                'judul' => $request->judul,
+                'category_id' => $request->category_id,
+                'content' => $request->content,
+                'slug' => Str::slug($request->judul)
+            ];
+        }
+
+        $post->tag()->sync($request->tags);
+        Post::where('id', $post->id)
+            ->update($post_data);
+
+        return redirect('/post')->with('status', 'Berhasil membuat Postingan baru');
     }
 
     /**

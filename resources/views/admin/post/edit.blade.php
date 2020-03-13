@@ -12,12 +12,13 @@
     </div>
     @endif
 
-    <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
       @csrf
+      @method('patch')
       <div class="form-group">
         <label>Judul</label>
         <input type="text" class="form-control @error('name') is-invalid @enderror" name="judul"
-          placeholder="Enter new judul">
+          value="{{ $post->judul }}">
         @error('name')
         <div class="invalid-feedback">
           {{ $message }}
@@ -30,7 +31,10 @@
         <select name="category_id" class="form-control">
           <option value="" holder>Choose category</option>
           @foreach ($category as $data)
-          <option value="{{ $data->id }}"> {{ $data->name }} </option>
+          <option value="{{ $data->id }}" @if ($data->id == $post->category_id)
+            selected
+            @endif
+            > {{ $data->name }} </option>
           @endforeach
         </select>
         @error('name')
@@ -44,14 +48,20 @@
         <label>Tags</label>
         <select class="form-control select2" multiple="" name="tags[]">
           @foreach ($tags as $tag)
-          <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+          <option value="{{ $tag->id }}" @foreach ($post->tag as $value)
+            @if ($tag->id == $value->id)
+            selected
+            @endif
+            @endforeach
+            >{{ $tag->name }}</option>
           @endforeach
         </select>
       </div>
 
       <div class="form-group">
         <label>Content</label>
-        <textarea name="content" class="form-control" cols="30" rows="10" placeholder="Enter a content"></textarea>
+        <textarea name="content" class="form-control" cols="30" rows="10"
+          placeholder="Enter a content">{{ $post->content }}</textarea>
         @error('name')
         <div class="invalid-feedback">
           {{ $message }}

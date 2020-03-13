@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="{{ asset('/modules/summernote/summernote-bs4.css')}}">
   <link rel="stylesheet" href="{{ asset('/modules/owlcarousel2/dist/assets/owl.carousel.min.css')}}">
   <link rel="stylesheet" href="{{ asset('/modules/owlcarousel2/dist/assets/owl.theme.default.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('/modules/select2/dist/css/select2.min.css')}}">
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('/css/style.css')}}">

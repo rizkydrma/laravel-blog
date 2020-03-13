@@ -17,6 +17,7 @@
       <td>No</td>
       <td>Nama</td>
       <td>Category</td>
+      <td>Tags</td>
       <td>Gambar</td>
       <td>Action</td>
     </tr>
@@ -27,6 +28,15 @@
       <td>{{ $post + $posts->firstitem() }}</td>
       <td>{{ $data->judul }}</td>
       <td>{{ $data->category->name}}</td>
+      <td>
+        <ul>
+          @foreach ($data->tag as $item)
+          <li>
+            {{ $item->name }}
+          </li>
+          @endforeach
+        </ul>
+      </td>
       <td>
         <img src="{{ asset($data->gambar) }}" class="img-fluid img-thumbnail" style="width: 5rem">
       </td>
