@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Post extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['judul','category_id','content','gambar','slug'];
+    protected $fillable = ['judul','category_id','content','gambar','slug','user_id'];
 
     public function category()
     {
@@ -20,5 +20,9 @@ class Post extends Model
         return $this->belongsToMany('App\Tag');
     }
 
+    public function users()
+    {
+        return $this->belongsTo('App\User');
+    }
     protected $dates = ['deleted_at'];
 }

@@ -18,6 +18,7 @@
       <td>Nama</td>
       <td>Category</td>
       <td>Tags</td>
+      <td>Creator</td>
       <td>Gambar</td>
       <td>Action</td>
     </tr>
@@ -31,12 +32,13 @@
       <td>
         <ul>
           @foreach ($data->tag as $item)
-          <li>
-            {{ $item->name }}
-          </li>
+          <h6>
+            <span class="badge badge-info ">{{ $item->name }}</span>
+          </h6>
           @endforeach
         </ul>
       </td>
+      <td>{{ $data->users->name }}</td>
       <td>
         <img src="{{ asset($data->gambar) }}" class="img-fluid img-thumbnail" style="width: 5rem">
       </td>
