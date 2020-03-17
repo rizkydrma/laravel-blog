@@ -131,7 +131,7 @@ class PostsController extends Controller
         Post::where('id', $post->id)
             ->update($post_data);
 
-        return redirect('/post')->with('status', 'Berhasil membuat Postingan baru');
+        return redirect()->route('post.index')->with('status', 'Berhasil membuat Postingan baru');
     }
 
     /**
@@ -142,6 +142,27 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        Post::destroy($post->id);
+        return redirect()->back()->with('status', 'Berhasil Menghapus Data! (cek trashed post');
+    }
+
+    public function trash()
+    {
+        $title = 'Trashed Post';
+        $posts = Post::onlyTrashed()->paginate(10);
+        return view('admin.post.trashed', compact('posts','title'));
+    }
+
+    public function restore($id)
+    {
+        Post::withTrashed()->where('id', $id)->restore();
+
+        return redirect()->back()->with('status', 'Restore data berhasil (Cek Daftar Post)');
+    }
+
+    public function kill($id)
+    {
+        Post::withTrashed()->where('id', $id)->forceDelete();
+        return redirect()->back()->with('status', 'Data berhasil dihapus sepenuhnya!');
     }
 }

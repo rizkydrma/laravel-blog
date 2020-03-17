@@ -19,8 +19,15 @@ Route::get('/', function () {
 
 Route::get('/home' , function(){
     return view('home');
-});
+})->name('home');
 
 Route::resource('/category','CategoryController');
 Route::resource('/tag', 'TagsController');
+Route::get('/post/trash', 'PostsController@trash')->name('post.trash');
+Route::get('/post/restore/{id}', 'PostsController@restore')->name('post.restore');
+Route::delete('/post/kill/{id}', 'PostsController@kill')->name('post.kill');
 Route::resource('/post', 'PostsController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
